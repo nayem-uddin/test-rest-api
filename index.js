@@ -3,7 +3,6 @@ const app = express();
 const fs = require("fs-extra");
 const port = process.env.port || 8080;
 const usersListDirectory = `${__dirname}/users.json`;
-
 const server = app.listen(port, () => {
   console.log("App running at http://localhost:" + port);
 });
@@ -22,12 +21,14 @@ app.get("/:id", (req, res, next) => {
       const users = JSON.parse(data);
       const userIndex = `user${req.params.id}`;
       if (!(userIndex in users)) {
-        throw new Error("User doesn't exist", 404);
+        const error = new Error("User doesn't exist");
+        error.status = 404;
+        throw error;
       }
       const user = users[userIndex];
       res.send(user);
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   });
 });
