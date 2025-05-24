@@ -28,7 +28,6 @@ app.get("/:id", (req, res, next) => {
       res.send(user);
     } catch (error) {
       next(error.message);
-      res.send(error.message);
     }
   });
 });
