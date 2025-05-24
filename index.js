@@ -25,9 +25,10 @@ app.get("/:id", (req, res, next) => {
         throw new Error("User doesn't exist", 404);
       }
       const user = users[userIndex];
-      res.end(JSON.stringify(user));
+      res.send(user);
     } catch (error) {
       next(error.message);
+      res.send(error.message);
     }
   });
 });
