@@ -21,6 +21,9 @@ app.get("/:id", (req, res, next) => {
     try {
       const users = JSON.parse(data);
       const userIndex = `user${req.params.id}`;
+      if (!(userIndex in users)) {
+        throw new Error("User doesn't exist", 404);
+      }
       const user = users[userIndex];
       res.end(JSON.stringify(user));
     } catch (error) {
